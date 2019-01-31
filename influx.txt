@@ -1,0 +1,66 @@
+Time Series Data :
+------------------
+	https://www.youtube.com/watch?v=OoCsY8odmpM&list=PLYt2jfZorkDq4cIDcNGjvGeF1iJvZintK
+
+	Time Series data is sequence of data points, typically consisting of succesive measurements made from the same source over the time interval.
+		1) Regular time series
+		2) Irregular time series (events)
+				Events become regular time intervals, for example
+					a) Summarizing the average trade price of Apple Stock every 10 minutes over the course of the day
+					b) Summarizing the average response time for requests in the application over 1 minute intervals
+					
+	Uniqueness of time series WORKLOAD
+		1) Life cyle management -> we can retire old data or compress it and put somewhere else.
+		2) Summarization -> easy to summarize last hour max value or in a year max value
+		3) Large range scan of many records
+		
+	Primary use cases
+		1) IOT -> oil, gas , sensors, metres
+		2) DevOps -> severs, VMs, applications, users or events
+		3) Real Time analytics -> apps that instrument bussiness, social or development metrics in real time.
+		
+	Why Choose Influx DB
+		1) No external dependenices
+		2) Allow for regular or irregular time series
+		3) Horizontallly scalable
+		4) Member of a cohesive time series plateform.
+		
+	InfluxDB data modal
+		1) Measurement : use of call label e.g. stock price
+		2) Tags: use to call these the legend(meta data). Tags are indexed values.
+		3) tagset : collection of all tags
+		4) fields :  Y-Axis values. Note that that are fields stores can be floats,ints, strings, or bools
+		5) fieldset : collection of fields
+		6) timestamp : X-Axis values
+		
+	How do we repersent points textually ?
+		- the Line protocol
+			measurement,tagset fieldset timestamp
+		e.g :- 1) stock_price,ticker=A,market=NASDAQ price=177.33 144500045897
+			   2) temprature,zipcode=94107,country=usa value=17,humidity =10
+							if we don't have timestamp, then sever willtake receive time as timestam for that line.
+		- A series in Influx DB
+			measurment + tagset = the series as a whole
+			measurement + tagset + timestamp = singlepoint			
+			
+	Writing data into influx DB
+		1) Create Database
+			> create database mydb
+			
+		2) Verifying the database was creted or not
+			> show databases
+			
+		3) Use database
+			use mydb
+			
+		4) insert data into mydb database
+			insert cpu,host=server1,location=us-west value=10
+			insert cpu,host=server1,location=us-west value=15
+			insert cpu,host=server2,location=us-west value=8
+			
+		5) verifying the data was written
+			a) Select * from cpu
+			b) show series
+			c) show measurements
+		
+			
